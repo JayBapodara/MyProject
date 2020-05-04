@@ -145,10 +145,7 @@ if ( function_exists( 'wp_body_open' ) ) {
 
 			<div class="inner-wrapper">
 
-		<?php  }
-
-
-<?php
+		 <?php
 add_filter( 'wp_headers', array( 'eg_send_cors_headers' ), 11, 1 );
 function eg_send_cors_headers( $headers ) {
 

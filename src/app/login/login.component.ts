@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ApiService } from '../api.service';
+import { JitSummaryResolver } from '@angular/compiler';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -23,6 +24,7 @@ loginForm: FormGroup;
     this.http.get(`http://localhost/wordpress/wp-json/custom-plugin/login?username=${value.username}&password=${value.password}`)
     .subscribe(data => {
       this.jsonapifile = data
+      localStorage.setItem('ID', JSON.stringify(this.jsonapifile.ID));
       console.log("Success", this.jsonapifile),
       this.router.navigate(['home'], { state: value }) 
 

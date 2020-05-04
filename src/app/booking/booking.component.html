@@ -13,6 +13,7 @@
 <div class="row m-0 p-0">
     <div class="frm px-5 py-4 mx-auto">
         <h2 class="margin l_class text-white text-center my-4">Hotel Booking Form</h2>
+        <!-- <form  [formGroup]='Bookgroup' method="POST" (ngSubmit)="onSubmit()" #myForm="ngForm"> -->
         <form  [formGroup]='Bookgroup' method="POST" (ngSubmit)="onSubmit()">
             <div class="row">
                 <div class="col-sm-12">
@@ -34,6 +35,7 @@
                             placeholder="Phone No." formControlName="post_mime_type" name="phone_no" required [ngClass]="{ 'is-invalid': submitted && f.post_mime_type.errors }">
                             <div *ngIf="submitted && f.post_mime_type.errors" class="invalid-feedback">
                                 <div *ngIf="f.post_mime_type.errors.required">phone_no is required</div>
+                                <div *ngIf="f.post_mime_type.errors.pattern">Please, Enter 10 digit Mobile Number.</div>
                             </div>
                     </div>
                 </div>
@@ -87,10 +89,14 @@
                     </div>
                 </div>
             </div>
-            <div class="btnn"><button type="submit"(click) ="Book(Bookgroup.value)"
-                    class="btn py-2 w-50 mt-4 text-white mb-3 btn-success mt-3 px-5">Booking Hotel</button>
+            <!-- <div class="btnn"><button type="submit" [disabled]="!myForm.form.valid" (click) ="Book(Bookgroup.value)" -->
+            <div class="btnn"><button type="submit" (click) ="Book(Bookgroup.value)"class="btn py-2 w-50 mt-4 text-white mb-3 btn-success mt-3 px-5">Booking Hotel</button>
             </div>
         </form>
     </div>
 </div>
+<div>
+    {{ data | json }}
+</div>
+
 <router-outlet></router-outlet>

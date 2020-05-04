@@ -95,90 +95,54 @@ function register_api_hooks() {
 }
 
 function login($request){
+	session_start();
 	$creds = array();
 	$creds['user_login'] = $request["username"];
 	$creds['user_password'] =  $request["password"];
-	$creds['remember'] = true;
+	// $creds['remember'] = true;
+
+	$_SESSION['se_login'] = $creds['user_login'];
+	$_SESSION['se_password'] = $creds['user_password'];
+
+	// echo $_SESSION['se_login'];
+	// echo $_SESSION['se_password'];
+
+
 	$user = wp_signon( $creds, false );
 
 	if ( is_wp_error($user) )
 		echo $user->get_error_message();
+		// echo "hello";
 
 	return $user;
 }
 
 // add_action( 'after_setup_theme', 'custom_login' );
 
+function add_cors_http_header(){
+    header("Access-Control-Allow-Origin: *");
+}
+add_action('init','add_cors_http_header');
 
+add_filter('allowed_http_origins', 'add_allowed_origins');
 
-// add_action( 'after_setup_theme', 'custom_login' );
-
-// function add_cors_http_header(){
-//     header("Access-Control-Allow-Origin: *");
-// }
-// add_action('init','add_cors_http_header');
-
-// add_filter('allowed_http_origins', 'add_allowed_origins');
-
-// function add_allowed_origins($origins) {
-//     $origins[] = 'https://www.yourdomain.com/';
-//     return $origins;
-
+function add_allowed_origins($origins) {
+    $origins[] = 'https://www.yourdomain.com/';
+    return $origins;
+}
+add_filter( 'something', 'regis_options' );
 
 
 
-// add_action( 'rest_api_init','register_api_hooks_booking' );
-
-// function register_api_hooks_booking() {
-//   register_rest_route(
-//     'custom-plugin', '/appoint/',
-//     array(
-//       'methods'  => 'POST',
-//       'callback' => 'hotel_booking',
-//     )
-//   );
-// }
-
-// function hotel_booking($request){
-//     $creds = array();
-//     $nm="jay";
-//     echo $nm;
-
-//     if ( is_wp_error($user) )
-//       echo $user->get_error_message();
-
-//     return $user;
-// }
-
-// add_action( 'after_setup_theme', 'custom_booking' );
 
 
-// add_action( 'rest_api_init','register_api_hooks_booking' );
 
-// function register_api_hooks_booking() {
-//   register_rest_route(
-//     'custom-plugin', '/appoint/',
-//     array(
-//       'methods'  => 'POST',
-//       'callback' => 'hotel_booking',
-//     )
-//   );
-// }
 
-// function hotel_booking($request){
-// 	$creds = array("parth","8140430070","parthkundaliya20@gmail.com","05:05:2022","09:30:am","dance class");
 
-//     echo $creds[0],"\n",$creds[1],"\n",$creds[2],"\n",$creds[3],"\n",$creds[4],"\n",$creds[5];
-//         if ( is_wp_error($user) )
-//       echo $user->get_error_message();
 
-//     return $user;
-// }
 
-    // echo $creds[::],"\n",$creds[1],"\n",$creds[2],"\n",$creds[3],"\n",$creds[4],"\n",$creds[5],"\n",$creds[6];
-    // $creds = array("Grand place","9624781718","jaybapodara555@gmail.com","02:04:2020","05:04:2020","1","5");
 
-// add_action( 'after_setup_theme', 'custom_booking' );
+
 
 add_action( 'rest_api_init', 'register_api_hooks_booking' );
 function register_api_hooks_booking() {
@@ -191,37 +155,107 @@ function register_api_hooks_booking() {
 	);
 }
 function Hotel_booking($request){
+	$nm=$_POST['post_title'];//hotel name
+	$ph_no=$_POST['post_mime_type'];//user mobile_no
+	$usern=$_POST['post_content'];//username
+	$dt=$_POST['post_date'];
+	$dtr=$_POST['post_date_gmt'];
+	$adt=$_POST['post_parent'];
+	$child=$_POST['post_password'];
+	
+	$pinged = $_POST['pinged'];
 
-$nm=$_POST['post_title'];
-$ph_no=$_POST['post_mime_type'];
-$usern=$_POST['post_content'];
-$dt=$_POST['post_date'];
-$dtr=$_POST['post_date_gmt'];
-$adt=$_POST['post_parent'];
-$child=$_POST['post_password'];
+	
+	if($ph_no == "" || !preg_match("/^[0-9]{10}$/", $ph_no))
+	{
 
-	$con = mysqli_connect('localhost','root','','tourism');
-
-	$qy= "INSERT INTO wp_posts (post_title , post_content , post_date , post_mime_type, post_date_gmt, post_parent, post_password) 
-	VALUES ('$nm','$usern', '$dt', '$ph_no', '$dtr', '$adt', '$child')";
-
-	if ($con->query($qy) === TRUE) {
-		echo "New record created successfully";
-	} 
-	else {
-		echo "Error: " . $qy . "<br>" . $con->error;
+		$required = "BAD Request";
+		http_response_code(400);
+		echo $required;
+		exit;
+  // echo "All Fields Are Reqiuired";
 	}
-	$field = file_get_contents('php://input');
-	echo $field;
-	$object = json_decode($field);
-	echo ($object);
+	else{
 
+		$con = mysqli_connect('localhost','root','','tourism');
 
-        // if ( is_wp_error($user) )
-        //     echo $user->get_error_message();
-        // return $user;
+		$qy= "INSERT INTO wp_posts (post_title, post_mime_type, post_content, post_date,  post_date_gmt , post_parent , post_password , pinged )
+		VALUES ('$nm','$ph_no','$usern','$dt','$dtr','$adt','$child','$pinged')";
 
+		if ($con->query($qy) === TRUE) {
+			$abc =mysqli_insert_id($con);
+
+			echo "ID  :".$abc . "Hotel_Name  :".$nm."MobileNo.  :".$ph_no."Name  :".$usern."Chaking_Date  :".$dt."Checkout_Date  :".$dtr."Adult_Person  :".$adt."Children_Person  :".$child;
+		} 
+		else {
+			echo "Error: " . $qy . "<br>" . $con->error;
+		}
+	}
+	
 }
-add_action( 'after_setup_theme', 'custom_booking');
 
 
+
+
+
+
+add_action( 'rest_api_init', 'logoutfn' );
+
+function logoutfn() {
+  register_rest_route(
+    'custom-plugin', '/logout/',
+    array(
+      'methods'  => 'GET',
+      'callback' => 'logout')
+  );
+}
+function logout(){
+	
+ session_destroy();
+}
+
+
+
+add_action( 'rest_api_init', 'Book_hotel' );
+
+function Book_hotel() {
+  register_rest_route(
+    'custom-plugin', '/book/',
+    array(
+      'methods'  => 'GET',
+      'callback' => 'hotel_room')
+  );
+}
+
+
+function hotel_room($data){
+
+	$pinged = $_GET['pinged'];
+
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "tourism";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+         $sql = "SELECT post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password FROM wp_posts WHERE pinged = $pinged";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+            	echo json_encode($row);
+              $sql = "SELECT post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password FROM wp_posts WHERE pinged = $pinged";
+                    echo "Hotel Name: "   . $row["post_title"]. "\n".
+                         "phone:"   . $row["post_mime_type"]. "\n".
+                         "username: "  . $row["post_content"].  "\n". 
+                         "date:". $row["post_date"]."\n" ;
+            }
+        } else 
+        {
+            echo "This User is not valid to see his bookings"; 
+        }
+}
