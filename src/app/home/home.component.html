@@ -58,9 +58,9 @@
             <div class="btnn" routerLink="/login" (click)="logout()">
                 <button type="submit" class="btn py-2 w-30 text-white mb-3 btn-success">Log Out</button>
             </div>
-            <div class="btnn" (click)="Showbook()">
+            <!-- <div class="btnn" (click)="Showbook()">
                 <button type="submit" class="btn py-2 w-30 text-white mb-3 btn-success">Show booking</button>
-            </div>
+            </div> -->
         </div>
     </div>
 
@@ -137,35 +137,9 @@
     </div>
 </div>
 
-<div *ngFor="let item of list">
+<!-- <div *ngFor="let item of list">
     {{item}}
-</div>
-<!-- <table class="table">
-    <thead>
-       <tr>
-          <th>UserLog_id</th>
-          <th>Hotel Name</th>
-          <th>MobileNO.</th>
-          <th>Username</th>
-          <th>Date</th>
-          <th>Return Date</th>
-          <th>Adult</th>
-          <th>Children</th>
-       </tr>
-    </thead>
-    <tbody>
-       <tr *ngFor="let item of list">
-          <td>{{ item.pinged }}</td>
-          <td>{{ item.post_title }}</td>
-          <td>{{ item.post_mime_type }}</td>
-          <td>{{ item.post_content }}</td>
-          <td>{{ item.post_date }}</td>
-          <td>{{ item.post_date_gmt }}</td>
-          <td>{{ item.post_parent }}</td>
-          <td>{{ item.post_password }}</td>
-       </tr>
-    </tbody>
- </table> -->
+</div> -->
 
 <app-booking></app-booking>
 

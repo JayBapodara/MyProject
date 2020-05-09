@@ -82,6 +82,10 @@ function hotel_intro() {
 	echo "</div>";	
 }
 
+
+
+
+/* login api */
 add_action( 'rest_api_init', 'register_api_hooks' );
 
 function register_api_hooks() {
@@ -142,6 +146,7 @@ add_filter( 'something', 'regis_options' );
 
 
 
+/* booking api */
 
 
 add_action( 'rest_api_init', 'register_api_hooks_booking' );
@@ -185,7 +190,7 @@ function Hotel_booking($request){
 		if ($con->query($qy) === TRUE) {
 			$abc =mysqli_insert_id($con);
 
-			echo "ID  :".$abc . "Hotel_Name  :".$nm."MobileNo.  :".$ph_no."Name  :".$usern."Chaking_Date  :".$dt."Checkout_Date  :".$dtr."Adult_Person  :".$adt."Children_Person  :".$child;
+			echo $abc;
 		} 
 		else {
 			echo "Error: " . $qy . "<br>" . $con->error;
@@ -197,7 +202,7 @@ function Hotel_booking($request){
 
 
 
-
+/* logout api */
 
 add_action( 'rest_api_init', 'logoutfn' );
 
@@ -228,6 +233,10 @@ function Book_hotel() {
 }
 
 
+
+
+/* display booking api */
+
 function hotel_room($data){
 
 	$pinged = $_GET['pinged'];
@@ -242,20 +251,172 @@ function hotel_room($data){
     if ($conn->connect_error) {
         die("Connection failed: " . $conn->connect_error);
     }
-         $sql = "SELECT post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password FROM wp_posts WHERE pinged = $pinged";
+         $sql = "SELECT id,post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password FROM wp_posts WHERE pinged = $pinged";
         $result = mysqli_query($conn, $sql);
-
+         $response =  [];
         if (mysqli_num_rows($result) > 0) {
             while($row = mysqli_fetch_assoc($result)) {
-            	echo json_encode($row);
-              $sql = "SELECT post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password FROM wp_posts WHERE pinged = $pinged";
-                    echo "Hotel Name: "   . $row["post_title"]. "\n".
-                         "phone:"   . $row["post_mime_type"]. "\n".
-                         "username: "  . $row["post_content"].  "\n". 
-                         "date:". $row["post_date"]."\n" ;
+            	 array_push($response, $row);
             }
+            echo json_encode($response);
+            exit();
         } else 
         {
             echo "This User is not valid to see his bookings"; 
         }
+}
+
+
+
+
+
+
+
+
+// **Edit button click api **
+
+add_action( 'rest_api_init', 'bookdata');
+
+function bookdata() {
+  register_rest_route(
+    'custom-plugin', '/edit/',
+    array(
+      'methods'  => 'GET',
+      'callback' => 'displaydata',
+    )
+  );
+}
+function displaydata($request){
+
+$id = $_GET['ID'];
+    // echo $log_id;
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "tourism";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+         $sql = "SELECT ID, post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password  FROM wp_posts WHERE ID = $id";
+        $result = mysqli_query($conn, $sql);
+
+        if (mysqli_num_rows($result) > 0) {
+            while($row = mysqli_fetch_assoc($result)) {
+                        echo json_encode($row);
+
+              $sql = "SELECT ID, post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password  FROM wp_posts WHERE ID = $id";
+
+
+                    // echo 
+                    //      "ID: "   . $row["ID"]. "\n".
+                    //      "Hotel Name: "   . $row["post_title"]. "\n".
+                    //      "ph no:"   . $row["post_mime_type"]. "\n".
+                    //      "username:"   . $row["post_content"]. "\n".
+                    //      "date: "  . $row["post_date"].  "\n". 
+                    //      "return date:"   . $row["post_date_gmt"]. "\n".
+                    //      "adult:"   . $row["post_parent"]. "\n".
+                    //      "children:". $row["post_password"]."\n" ;
+
+                        // exit();
+            }
+        } else 
+        {
+            echo "This User is not valid to see his bookings"; 
+        } 
+}
+
+
+
+/* update api */
+
+add_action( 'rest_api_init', 'updatedata');
+
+function updatedata() {
+  register_rest_route(
+    'custom-plugin', '/update/',
+    array(
+      'methods'  => 'PUT',
+      'callback' => 'tabledata',
+    )
+  );
+}
+
+function tabledata($request){
+	$ID = $_GET['ID'];
+    var_dump($ID);
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "tourism";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    parse_str(file_get_contents('php://input'),$_PUT);
+
+	var_dump($_put);
+ 	 $json_array[] = $_PUT;
+      $json = json_encode($json_array);
+    echo $json;
+
+ $sql = $conn->query("UPDATE wp_posts SET
+      post_title='".$_PUT['post_title']."', post_mime_type='".$_PUT['post_mime_type']."',post_content='".$_PUT['post_content']."',post_date='".$_PUT['post_date']."',post_date_gmt='".$_PUT['post_date_gmt']."',post_parent='".$_PUT['post_parent']."',post_password='".$_PUT['post_password']."' WHERE id= $ID");
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record updated successfully";
+        exit();
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+}
+
+
+
+/* Delete api */
+
+add_action( 'rest_api_init', 'deletedata');
+
+function deletedata() {
+  register_rest_route(
+    'custom-plugin', '/delete/',
+    array(
+      'methods'  => 'DELETE',
+      'callback' => 'delete',
+    )
+  );
+}
+
+function delete(){
+	$ID = $_GET['ID']; //ID
+
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "tourism";
+
+// Create connection
+	$conn = new mysqli($servername, $username, $password, $dbname);
+// Check connection
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+
+
+
+	$query=mysqli_query($conn, "DELETE FROM wp_posts WHERE ID = '$ID' ");
+
+	if($query==true){ 
+        echo "Records was delete successfully.";
+        exit();
+    } else{ 
+        echo "ERROR:Records is not delete . " . $mysqli->error;
+    } 
+	// echo json_encode($query);
+    // return $data;
 }

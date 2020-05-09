@@ -18,7 +18,7 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="form-group">
-                        <select class="form-control mt-2" formControlName="post_title"[ngClass]="{ 'is-invalid': submitted && f.post_title.errors }">
+                        <select class="form-control mt-2" [ngModel] = "obj.post_title" formControlName="post_title"[ngClass]="{ 'is-invalid': submitted && f.post_title.errors }">
                             <div *ngIf="submitted && f.post_title.errors" class="invalid-feedback">
                                 <div *ngIf="f.post_title.errors.required">hotel_name is required</div>
                             </div>
@@ -32,7 +32,7 @@
                 <div class="col-sm-12">
                     <div class="form-group">
                         <input type="number" class="form-contral rounded-sm w-100 p-2 pl-1 border-0"
-                            placeholder="Phone No." formControlName="post_mime_type" name="phone_no" required [ngClass]="{ 'is-invalid': submitted && f.post_mime_type.errors }">
+                            placeholder="Phone No." [ngModel] = "obj.post_mime_type" formControlName="post_mime_type" name="phone_no" required [ngClass]="{ 'is-invalid': submitted && f.post_mime_type.errors }">
                             <div *ngIf="submitted && f.post_mime_type.errors" class="invalid-feedback">
                                 <div *ngIf="f.post_mime_type.errors.required">phone_no is required</div>
                                 <div *ngIf="f.post_mime_type.errors.pattern">Please, Enter 10 digit Mobile Number.</div>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="col-sm-12">
                     <input type="text" class="form-contral rounded-sm mt-2 w-100 pl-1 p-2 border-0"
-                        placeholder="username" formControlName="post_content" name="username" required [ngClass]="{ 'is-invalid': submitted && f.post_content.errors }">
+                        placeholder="username" [ngModel] = "obj.post_content" formControlName="post_content" name="username" required [ngClass]="{ 'is-invalid': submitted && f.post_content.errors }">
                         <div *ngIf="submitted && f.post_content.errors" class="invalid-feedback">
                             <div *ngIf="f.post_content.errors.required">username is required</div>
                         </div>
@@ -52,7 +52,7 @@
                     <div class="form-group">
                         <label class="check text-white mt-4">Check In </label>
                         <input type="date" class="form-contral rounded-sm w-100 p-2 mt-4 pl-1 border-0"
-                            placeholder="date" formControlName="post_date" name="date" required [ngClass]="{ 'is-invalid': submitted && f.post_date.errors }">
+                            placeholder="date" [ngModel] = "obj.post_date"formControlName="post_date" name="date" required [ngClass]="{ 'is-invalid': submitted && f.post_date.errors }">
                             <div *ngIf="submitted && f.post_date.errors" class="invalid-feedback">
                                 <div *ngIf="f.post_date.errors.required">date is required</div>
                             </div>
@@ -62,7 +62,7 @@
                     <div class="form-group">
                         <label class="check text-white mt-4">Check Out </label>
                         <input type="date" class="form-contral rounded-sm w-100 p-2 mt-4 pl-1 border-0"
-                            placeholder="date" formControlName="post_date_gmt" name="date" required [ngClass]="{ 'is-invalid': submitted && f.post_date_gmt.errors }">
+                            placeholder="date" [ngModel] = "obj.post_date_gmt" formControlName="post_date_gmt" name="date" required [ngClass]="{ 'is-invalid': submitted && f.post_date_gmt.errors }">
                             <div *ngIf="submitted && f.post_date_gmt.errors" class="invalid-feedback">
                                 <div *ngIf="f.post_date_gmt.errors.required">return_date is required</div>
                             </div>
@@ -73,7 +73,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <input type="number" class="form-contral rounded-sm w-100 p-2 pl-1 border-0"
-                            placeholder="Adult" formControlName="post_parent" name="phone_no" required [ngClass]="{ 'is-invalid': submitted && f.post_parent.errors }">
+                            placeholder="Adult" [ngModel] = "obj.post_parent" formControlName="post_parent" name="phone_no" required [ngClass]="{ 'is-invalid': submitted && f.post_parent.errors }">
                             <div *ngIf="submitted && f.post_parent.errors" class="invalid-feedback">
                                 <div *ngIf="f.post_parent.errors.required">Adult is required</div>
                             </div>
@@ -82,7 +82,7 @@
                 <div class="col-sm-6">
                     <div class="form-group">
                         <input type="number" class="form-contral rounded-sm w-100 p-2 pl-1 border-0"
-                            placeholder="Children" formControlName="post_password" name="phone_no" required [ngClass]="{ 'is-invalid': submitted && f.post_password.errors }">
+                            placeholder="Children" [ngModel] = "obj.post_password" formControlName="post_password" name="phone_no" required [ngClass]="{ 'is-invalid': submitted && f.post_password.errors }">
                             <div *ngIf="submitted && f.post_password.errors" class="invalid-feedback">
                                 <div *ngIf="f.post_password.errors.required">Children is required</div>
                             </div>
@@ -90,13 +90,53 @@
                 </div>
             </div>
             <!-- <div class="btnn"><button type="submit" [disabled]="!myForm.form.valid" (click) ="Book(Bookgroup.value)" -->
-            <div class="btnn"><button type="submit" (click) ="Book(Bookgroup.value)"class="btn py-2 w-50 mt-4 text-white mb-3 btn-success mt-3 px-5">Booking Hotel</button>
+            <div class="btnn"><button type="submit" (click) ="Book(Bookgroup.value)"
+                class="btn py-2 w-50 mt-4 text-white mb-3 btn-success mt-3 px-5">Booking Hotel</button>
+                <button type="submit" (click) =" updatedatanew(Bookgroup.value)"
+                class="btn py-2 w-50 mt-4 text-white mb-3 btn-dark mt-3 px-5">Update</button>
             </div>
         </form>
     </div>
 </div>
-<div>
+<!-- <div *ngFor="let item of data">
+    {{item | json }}
+</div> -->
+
+<table class="table">
+    <thead>
+       <tr>
+          <th>Userid</th>
+          <th>Hotel Name</th>
+          <th>MobileNO.</th>
+          <th>Username</th>
+          <th>Date</th>
+          <th>Return Date</th>
+          <th>Adult</th>
+          <th>Children</th>
+          <th>Edit</th>
+          <!-- <th>Update</th> -->
+          <th>Delete</th>
+       </tr>
+    </thead>
+    <tbody>
+       <tr *ngFor="let item of list">
+           <td>{{item. id}}</td>
+          <td>{{ item.post_title }}</td>
+          <td>{{ item.post_mime_type }}</td>
+          <td>{{ item.post_content }}</td>
+          <td>{{ item.post_date }}</td>
+          <td>{{ item.post_date_gmt }}</td>
+          <td>{{ item.post_parent }}</td>
+          <td>{{ item.post_password }}</td>
+          <td><a class="btn btn-sm text-white btn-success" (click)= "update(item)">Edit</a></td>
+          <!-- <td><a class="btn btn-sm text-white btn-primary">Update</a></td> -->
+          <!-- <td><button type="submit" class="btn btn-danger" (click) = "delete(item.id)">delete</button></td> -->
+          <td><a class="btn btn-sm text-white btn-danger" (click)= "delete(item.id)">Delete</a></td>
+       </tr>
+    </tbody>
+ </table>
+<!-- <div>
     {{ data | json }}
-</div>
+</div> -->
 
 <router-outlet></router-outlet>
