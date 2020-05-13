@@ -103,7 +103,7 @@ export class BookingComponent implements OnInit {
     }
     )
   }
-  updatedatanew(value){
+  updatedatanew(value){ 
     alert("Are you sure Update data");
     console.log("this is value",value.id);
      this.prmid = JSON.parse(localStorage.getItem('prmid'));

@@ -25,6 +25,7 @@ loginForm: FormGroup;
     .subscribe(data => {
       this.jsonapifile = data
       localStorage.setItem('ID', JSON.stringify(this.jsonapifile.ID));
+      localStorage.setItem('user_email', JSON.stringify(this.jsonapifile.data.user_email));
       console.log("Success", this.jsonapifile),
       this.router.navigate(['home'], { state: value }) 
 

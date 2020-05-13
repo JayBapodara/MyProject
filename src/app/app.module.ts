@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule }    from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS }    from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,6 +13,7 @@ import { ActivateGuard } from './activate.guard';
 import { ApiService } from './api.service';
 import { AdminComponent } from './admin/admin.component';
 // import { Approutes } from './Routing';
+import {Interceptor} from './interceptor';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,7 @@ import { AdminComponent } from './admin/admin.component';
     FormsModule
 
   ],
-  providers: [ActivateGuard,ApiService],
+  providers: [ActivateGuard,ApiService,{provide: HTTP_INTERCEPTORS, useClass : Interceptor, multi:true }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

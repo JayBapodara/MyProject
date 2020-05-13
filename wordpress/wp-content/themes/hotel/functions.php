@@ -221,6 +221,10 @@ function logout(){
 
 
 
+
+
+/* display booking api */
+
 add_action( 'rest_api_init', 'Book_hotel' );
 
 function Book_hotel() {
@@ -228,16 +232,31 @@ function Book_hotel() {
     'custom-plugin', '/book/',
     array(
       'methods'  => 'GET',
-      'callback' => 'hotel_room')
+      'callback' => 'hotel_room'
+  	)
   );
 }
 
+function hotel_room($request){
+
+$json = $request->get_headers();
+
+echo " <h1>Jay</h1> ";
+echo "<br>";
+
+$user_req_email = '';
+foreach ($json as $key => $feature) {
+	if($key == 'auth'){
+		$user_email = $feature[0];
+	}
+}
+
+if($user_email){
+	echo $user_email;
+	exit();
+}
 
 
-
-/* display booking api */
-
-function hotel_room($data){
 
 	$pinged = $_GET['pinged'];
 
@@ -419,4 +438,44 @@ function delete(){
     } 
 	// echo json_encode($query);
     // return $data;
+}
+
+
+
+/* Sign up api */
+
+add_action( 'rest_api_init', 'register_api_hooks_signup' );
+
+function register_api_hooks_signup() {
+	register_rest_route(
+		'custom-plugin', '/signup/',
+		array(
+			'methods'  => 'POST',
+			'callback' => 'signup',
+		)
+	);
+}
+function signup($request){
+	$un=$_POST['user_login'];//username
+    $pass=$_POST['user_pass'];//user pass
+    $md = md5($pass);
+    $email=$_POST['user_email'];//user email address
+    $nn=$_POST['user_nicename'];//user nicename
+	$d= date("Y-m-d h:i:sa");
+
+
+    $con = mysqli_connect('localhost','root','','tourism');
+
+
+    $qy= "INSERT INTO wp_users (user_login , user_pass , user_email , user_nicename , display_name, user_registered) 
+    VALUES ('$un', '$md' , '$email' , '$nn' , '$nn' , '$d')";
+    if ($con->query($qy) === TRUE) {
+        // $abc =mysqli_insert_id($con);
+        echo "new user create successfully";
+        //     echo "ID:".$abc;
+        exit;
+    } 
+    else {
+        echo "Error: " . $qy . "<br>" . $con->error;
+    }
 }

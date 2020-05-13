@@ -20,6 +20,10 @@ export class ApiService {
     // console.log("service calleed");
     return this.httpClient.get('http://localhost/wordpress/wp-json/custom-plugin/login');
   }
+
+  signupuser(){
+    return this.httpClient.get('http://localhost/wordpress/wp-json/custom-plugin/signup');
+  }
   sendMessage(message:any){
     this._techerMessageSource.next(message);
   }
@@ -30,8 +34,8 @@ export class ApiService {
   edit() {
     let id = localStorage.getItem('ID');
     console.log("ID *", id)
-    
-
+    var email = localStorage.getItem('user_email');
+    console.log("user_email id", email);
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
     return this.httpClient.get
       (`http://localhost/wordpress/wp-json/custom-plugin/book?&pinged=${id}`,
