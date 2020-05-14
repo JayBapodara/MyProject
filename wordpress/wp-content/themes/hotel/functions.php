@@ -241,8 +241,8 @@ function hotel_room($request){
 
 $json = $request->get_headers();
 
-echo " <h1>Jay</h1> ";
-echo "<br>";
+// echo " <h1>Jay</h1> ";
+// echo "<br>";
 
 $user_req_email = '';
 foreach ($json as $key => $feature) {
@@ -252,7 +252,7 @@ foreach ($json as $key => $feature) {
 }
 
 if($user_email){
-	echo $user_email;
+	// echo $user_email;
 	exit();
 }
 
@@ -367,6 +367,8 @@ function tabledata($request){
 	$ID = $_GET['ID'];
     var_dump($ID);
 
+
+
     $servername = "localhost";
     $username = "root";
     $password = "";
@@ -458,7 +460,7 @@ function register_api_hooks_signup() {
 function signup($request){
 	$un=$_POST['user_login'];//username
     $pass=$_POST['user_pass'];//user pass
-    $md = md5($pass);
+    $md = wp_hash_password($pass);
     $email=$_POST['user_email'];//user email address
     $nn=$_POST['user_nicename'];//user nicename
 	$d= date("Y-m-d h:i:sa");
@@ -478,4 +480,55 @@ function signup($request){
     else {
         echo "Error: " . $qy . "<br>" . $con->error;
     }
+}
+
+
+
+
+
+/*  forgot  password api */
+
+add_action( 'rest_api_init', 'register_api_hooks_forgotpass' );
+
+function register_api_hooks_forgotpass() {
+    register_rest_route(
+        'custom-plugin', '/forgot/',
+        array(
+            'methods'  => 'PUT',
+            'callback' => 'password',
+        )
+    );
+}
+
+function password(){
+    $ID = $_GET['user_email'];
+    var_dump($ID);
+    $up = $_POST['user_pass'];
+    // $md = md5($up);
+    $user_pass = wp_hash_password("$up");
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "tourism";
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+    parse_str(file_get_contents('php://input'),$_PUT);
+    // print_r($_PUT);
+
+    //
+    $json_array[] = $_PUT;
+    $json = json_encode($json_array);
+    echo $json;
+    $sql = mysqli_query($conn, "UPDATE wp_users SET user_pass='$user_pass' WHERE user_email = '$ID' " );
+
+    if ($conn->query($sql) === TRUE) {
+        echo "Record updated successfully";
+    } else {
+        echo "Error updating record: " . $conn->error;
+    }
+    $conn->close();
 }

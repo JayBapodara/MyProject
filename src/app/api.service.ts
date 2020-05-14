@@ -14,6 +14,7 @@ export class ApiService {
   // }
   private _techerMessageSource = new Subject<any>();
   techerMessage$ = this._techerMessageSource.asObservable();
+  usremail: any;
 
   constructor(private httpClient: HttpClient) { }
   getUser() {
@@ -29,6 +30,15 @@ export class ApiService {
   }
   isadminrights(): boolean {
     return true;
+  }
+  interceptorauth(): boolean {
+    this.usremail = JSON.parse(localStorage.getItem('user_email'))
+    console.log('user_email', this.usremail)
+    if (this.usremail == null) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   edit() {
