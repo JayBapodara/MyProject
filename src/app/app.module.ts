@@ -16,6 +16,10 @@ import { AdminComponent } from './admin/admin.component';
 // import { Approutes } from './Routing';
 import {Interceptor} from './interceptor';
 import { ForgotComponent } from './forgot/forgot.component';
+import { ForgototpComponent } from './forgototp/forgototp.component';
+import { OtpComponent } from './otp/otp.component';
+import { CountdownModule } from 'ngx-countdown';
+
 
 @NgModule({
   declarations: [
@@ -25,6 +29,8 @@ import { ForgotComponent } from './forgot/forgot.component';
     BookingComponent,
     AdminComponent,
     ForgotComponent,
+    ForgototpComponent,
+    OtpComponent,
 
 
   ],
@@ -32,6 +38,7 @@ import { ForgotComponent } from './forgot/forgot.component';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
+    CountdownModule,
     
     BrowserAnimationsModule,
     FormsModule,

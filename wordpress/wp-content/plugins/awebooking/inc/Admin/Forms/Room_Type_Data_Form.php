@@ -79,6 +79,11 @@ class Room_Type_Data_Form extends Form {
 			'after'           => $this->datalist_number_callback( 1, 20 ),
 		]);
 
+		// $general->add_field([
+		// 	'id'  => 'action',
+		// 	'type' => 'button',
+		// ])
+
 		/*$general->add_field( [
 			'id'              => 'calculation_infants',
 			'type'            => 'abrs_toggle',

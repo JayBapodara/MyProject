@@ -177,15 +177,15 @@ function Hotel_booking($request){
 		$required = "BAD Request";
 		http_response_code(400);
 		echo $required;
-		exit;
+		exit();
   // echo "All Fields Are Reqiuired";
 	}
 	else{
 
 		$con = mysqli_connect('localhost','root','','tourism');
 
-		$qy= "INSERT INTO wp_posts (post_title, post_mime_type, post_content, post_date,  post_date_gmt , post_parent , post_password , pinged )
-		VALUES ('$nm','$ph_no','$usern','$dt','$dtr','$adt','$child','$pinged')";
+		$qy= "INSERT INTO wp_posts (post_title, post_mime_type, post_content, post_date,  post_date_gmt , post_parent , post_password , pinged, post_status ,post_type )
+		VALUES ('$nm','$ph_no','$usern','$dt','$dtr','$adt','$child','$pinged', 'awebooking-confirmed', 'pending')";
 
 		if ($con->query($qy) === TRUE) {
 			$abc =mysqli_insert_id($con);
@@ -238,51 +238,51 @@ function Book_hotel() {
 }
 
 function hotel_room($request){
-
-$json = $request->get_headers();
-
-// echo " <h1>Jay</h1> ";
-// echo "<br>";
-
-$user_req_email = '';
-foreach ($json as $key => $feature) {
-	if($key == 'auth'){
-		$user_email = $feature[0];
-	}
-}
-
-if($user_email){
-	// echo $user_email;
-	exit();
-}
-
-
-
 	$pinged = $_GET['pinged'];
+	// $ID = $_GET['ID']; //ID
+	// var_dump($ID);
+
+	// var_dump($pinged);
+
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "tourism";
+
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+	$sql = "SELECT id,post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password, post_status FROM wp_posts WHERE pinged = $pinged";
+	$result = mysqli_query($conn, $sql);
+	$respnose = []; 
 
 
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "tourism";
+	if (mysqli_num_rows($result) > 0) {
+		while($row = mysqli_fetch_assoc($result)) {
+			// $sql = "SELECT ID, post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password, post_status FROM wp_posts WHERE pinged = $pinged";
+			// // "ID: "  . $row["ID"].  "\n".
+			// echo "Hotel Name: "  . $row["post_title"].  "\n". 
+			// "Mobile no: "  . $row["post_mime_type"].  "\n". 
+			// "Username:"   . $row["post_content"]. "\n".
+			// "Date: "  . $row["post_date"].  "\n". 
+			// "Return date:". $row["post_date_gmt"]."\n" ;
+			// "Adult:". $row["post_parent"]."\n" ;
+			// "Children:". $row["post_password"]."\n" ;
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-         $sql = "SELECT id,post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password FROM wp_posts WHERE pinged = $pinged";
-        $result = mysqli_query($conn, $sql);
-         $response =  [];
-        if (mysqli_num_rows($result) > 0) {
-            while($row = mysqli_fetch_assoc($result)) {
-            	 array_push($response, $row);
-            }
-            echo json_encode($response);
-            exit();
-        } else 
-        {
-            echo "This User is not valid to see his bookings"; 
-        }
+			// $json_response = json_encode($row);
+			// echo $json_response
+			// exit();
+			array_push($respnose,$row);
+		}
+		echo json_encode($respnose);
+		exit();
+	}
+	else 
+	{
+		echo "This User is not valid to see his bookings"; 
+	}
+	mysqli_close($conn);
 }
 
 
@@ -326,7 +326,7 @@ $id = $_GET['ID'];
             while($row = mysqli_fetch_assoc($result)) {
                         echo json_encode($row);
 
-              $sql = "SELECT ID, post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password  FROM wp_posts WHERE ID = $id";
+              $sql = "SELECT id, post_title, post_mime_type, post_content, post_date, post_date_gmt, post_parent, post_password  FROM wp_posts WHERE ID = $id";
 
 
                     // echo 
@@ -387,7 +387,7 @@ function tabledata($request){
     echo $json;
 
  $sql = $conn->query("UPDATE wp_posts SET
-      post_title='".$_PUT['post_title']."', post_mime_type='".$_PUT['post_mime_type']."',post_content='".$_PUT['post_content']."',post_date='".$_PUT['post_date']."',post_date_gmt='".$_PUT['post_date_gmt']."',post_parent='".$_PUT['post_parent']."',post_password='".$_PUT['post_password']."' WHERE id= $ID");
+      post_title='".$_PUT['post_title']."', post_mime_type='".$_PUT['post_mime_type']."',post_content='".$_PUT['post_content']."',post_date='".$_PUT['post_date']."',post_date_gmt='".$_PUT['post_date_gmt']."',post_parent='".$_PUT['post_parent']."',post_password='".$_PUT['post_password']."' WHERE ID= $ID");
 
     if ($conn->query($sql) === TRUE) {
         echo "Record updated successfully";
@@ -502,10 +502,10 @@ function register_api_hooks_forgotpass() {
 
 function password(){
     $ID = $_GET['user_email'];
-    var_dump($ID);
-    $up = $_POST['user_pass'];
+    // var_dump($ID);
+    $up = $_PUT['user_pass'];
     // $md = md5($up);
-    $user_pass = wp_hash_password("$up");
+    // $user_pass = wp_hash_password("$up");
 
     $servername = "localhost";
     $username = "root";
@@ -523,7 +523,7 @@ function password(){
     $json_array[] = $_PUT;
     $json = json_encode($json_array);
     echo $json;
-    $sql = mysqli_query($conn, "UPDATE wp_users SET user_pass='$user_pass' WHERE user_email = '$ID' " );
+    $sql = mysqli_query($conn, "UPDATE wp_users SET  user_pass='".wp_hash_password($_PUT['user_pass'])."'  WHERE user_email = '$ID' " );
 
     if ($conn->query($sql) === TRUE) {
         echo "Record updated successfully";
@@ -531,4 +531,235 @@ function password(){
         echo "Error updating record: " . $conn->error;
     }
     $conn->close();
+}
+
+//////////////////////////////////////////*confirm button*//////////////////////////////////////////
+
+add_action( 'rest_api_init', 'register_api_hooks_confirm' );
+
+function register_api_hooks_confirm() {
+	register_rest_route(
+		'custom-plugin', '/confirm_btn/',
+		array(
+			'methods'  => 'PUT',
+			'callback' => 'confirm_btn',
+		)
+	);
+}
+
+function confirm_btn(){
+	$ID = $_GET['id'];
+	var_dump($ID);
+
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "tourism";
+
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+	parse_str(file_get_contents('php://input'),$_PUT);
+    // print_r($_PUT);
+
+	// $json_array[] = $_PUT;
+	// $json = json_encode($json_array);
+	// echo $json;
+
+	$sql = mysqli_query($conn, "UPDATE wp_posts SET post_status = 'awebooking' WHERE id = '$ID' " );
+
+	if ($conn->query($sql) === TRUE) {
+		echo "Record updated successfully";
+	} else {
+		echo "Error updating record: " . $conn->error;
+	}
+	$conn->close();
+}
+
+
+//////////////////////////////////////////*cancel button*//////////////////////////////////////////
+
+add_action( 'rest_api_init', 'register_api_hooks_cancel' );
+
+function register_api_hooks_cancel() {
+	register_rest_route(
+		'custom-plugin', '/cancel_btn/',
+		array(
+			'methods'  => 'PUT',
+			'callback' => 'cancel_btn',
+		)
+	);
+}
+
+function cancel_btn(){
+	$ID = $_GET['id'];
+	var_dump($ID);
+
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$dbname = "tourism";
+
+	$conn = new mysqli($servername, $username, $password, $dbname);
+	if ($conn->connect_error) {
+		die("Connection failed: " . $conn->connect_error);
+	}
+	parse_str(file_get_contents('php://input'),$_PUT);
+    // print_r($_PUT);
+
+	// $json_array[] = $_PUT;
+	// $json = json_encode($json_array);
+	// echo $json;
+
+	$sql = mysqli_query($conn, "UPDATE wp_posts SET post_status = 'awebooking-canceled' WHERE id = '$ID' " );
+
+	if ($conn->query($sql) === TRUE) {
+		echo "Record updated successfully";
+	} else {
+		echo "Error updating record: " . $conn->error;
+	}
+	$conn->close();
+}
+
+//////////////////////////////////////////*email sent api*//////////////////////////////////////////
+
+
+add_action( 'rest_api_init', 'register_api_hooks_mail' );
+
+function register_api_hooks_mail() {
+	register_rest_route(
+		'custom-plugin', '/emailpass/',
+		array(
+			'methods'  => 'POST',
+			'callback' => 'email',
+		)
+	);
+}
+
+function email($request){
+
+	include 'email/index.php';
+}
+
+/////////////////////////////////forgot with otp api//////////////////////////////////////
+
+
+add_action( 'rest_api_init', 'register_api_hooks_forgototp' );
+
+function register_api_hooks_forgototp() {
+	register_rest_route(
+		'custom-plugin', '/forgototp/',
+		array(
+			'methods'  => 'POST',
+			'callback' => 'forgototp',
+		)
+	);
+}
+
+function forgototp($request){
+
+ $success = "";
+    $error_message = "";
+    $conn = mysqli_connect("localhost","root","","tourism");
+    $result = mysqli_query($conn,"SELECT * FROM wp_users WHERE user_email='" . $_POST["user_email"] . "'");
+    var_dump($_POST["user_email"]);
+
+	date_default_timezone_set("Asia/Kolkata");
+    $count  = mysqli_num_rows($result);
+    $otp = rand(100000,999999);
+
+    $qy = "INSERT INTO otp (otp, user_email, otp_date) VALUES ('$otp','" . $_POST["user_email"] . "','" . date("Y-m-d H:i:s"). "')";
+    if ($conn->query($qy) === TRUE) {
+        echo "successfully";
+    } 
+    else {
+        echo "Error: " . $qy . "<br>" . $con->error;
+    }
+
+    require('email/phpmailer/class.phpmailer.php');
+    require('email/phpmailer/class.smtp.php');
+
+    $message_body = "OTP code is:" . $otp;
+    $mail = new PHPMailer();
+    $mail->IsSMTP();
+    $mail->SMTPDebug = 0;
+    $mail->SMTPAuth = TRUE;
+    $mail->SMTPSecure = 'ssl'; // tls or ssl
+    $mail->Port     = 465;
+    $mail->Username = 'jaybapodara.rao@gmail.com';                 // SMTP username
+    $mail->Password = 'Rao@1234';
+    $mail->Host     = "smtp.gmail.com";
+    $mail->Mailer   = "smtp";
+    $mail->SetFrom($email);
+    $mail->AddAddress($_POST["user_email"]);
+    $mail->Subject = "Change password OTP";
+    $mail->MsgHTML($message_body);
+    $mail->IsHTML(true);
+    $result = $mail->Send();
+
+    return $result;
+
+}
+
+
+
+
+
+
+/////////////////////////////////OTP compare//////////////////////////////////////
+
+
+add_action( 'rest_api_init', 'register_api_hooks_otp_compare' );
+
+function register_api_hooks_otp_compare() {
+    register_rest_route(
+        'custom-plugin', '/otpcompare/',
+        array(
+            'methods'  => 'GET',
+            'callback' => 'otp_compare',
+        )
+    );
+}
+function otp_compare($request){
+
+    $otp = $_GET['otp']; //otp
+    $user_email = $_GET['user_email']; //email
+
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "tourism";
+
+
+   
+
+    $conn = new mysqli($servername, $username, $password, $dbname);
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+
+    
+
+    $sql = "SELECT ID,user_id,user_email,otp,otp_date FROM otp 
+    WHERE otp = '$otp' && user_email = '$user_email'
+    AND NOW() <= DATE_ADD(otp_date, INTERVAL 300 SECOND)";
+
+    $result = mysqli_query($conn, $sql);
+    $respnose = []; 
+
+
+    if (mysqli_num_rows($result) > 0) {
+        while($row = mysqli_fetch_assoc($result)) {
+            array_push($respnose,$row);
+        }
+        echo json_encode($respnose);
+        exit();
+    }
+    else 
+    {
+        echo "This User is not valid to see his bookings"; 
+    }
+    mysqli_close($conn);
 }

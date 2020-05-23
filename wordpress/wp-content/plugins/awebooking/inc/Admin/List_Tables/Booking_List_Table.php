@@ -63,6 +63,7 @@ class Booking_List_Table extends Abstract_List_Table {
 			'booking_total'     => esc_html__( 'Total', 'awebooking' ),
 			'booking_paid'      => esc_html__( 'Paid', 'awebooking' ),
 			'booking_date'      => esc_html__( 'Date', 'awebooking' ),
+			'Action'      => esc_html__( 'Action','awebooking' ),
 		]);
 	}
 
@@ -88,6 +89,9 @@ class Booking_List_Table extends Abstract_List_Table {
 			$this->booking = $the_booking;
 		}
 	}
+		// protected function prepare_row_data( $Action) {
+		
+	// }
 
 	/**
 	 * Display column: booking_number.
@@ -140,6 +144,26 @@ class Booking_List_Table extends Abstract_List_Table {
 	 *
 	 * @return void
 	 */
+	protected function display_Action_column() {        
+		?>
+            <form method="post">
+
+                <button class="" style="">
+                 <?php 
+                 echo '<a href="http://localhost/wordpress/wp-json/custom-plugin/confirm_btn?id=35&_method=PUT"> Confirm</a>'; ?>
+             </button>
+         </form>
+            <form method="post">
+
+                <button class="" style="">
+                 <?php 
+                 echo '<a href="http://localhost/wordpress/wp-json/custom-plugin/cancel_btn?id=332 &_method=PUT"> Canceled</a>'; ?>
+             </button>
+         </form>
+         <?php
+
+	}
+
 	protected function display_booking_status_column() {
 		$status = $this->booking->get( 'status' );
 
@@ -160,6 +184,7 @@ class Booking_List_Table extends Abstract_List_Table {
 			<span title="<?php esc_attr_e( 'Length of stay varies, see each room.', 'awebooking' ); ?>">
 				<span class="dashicons dashicons-info"></span>
 			</span>
+
 		<?php else : ?>
 			<?php echo absint( $nights_stay ); ?>
 		<?php endif;

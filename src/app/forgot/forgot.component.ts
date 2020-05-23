@@ -22,18 +22,20 @@ export class ForgotComponent implements OnInit {
   }
 
   forgotUser(value) {
-    this.jsonapi = `http://localhost/wordpress/wp-json/custom-plugin/forgot`
+    this.jsonapi = `http://localhost/wordpress/wp-json/custom-plugin/forgototp`
+    // this.jsonapi = `http://localhost/wordpress/wp-json/custom-plugin/forgot`
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     console.log('object ', value)
-    return this.http.put(
+    return this.http.post(
       this.jsonapi,
-      `user_email=${value.user_email}&user_pass=${value.user_pass}&action=${'wp_users'}`,
+      `user_email=${value.user_email}&action=${'otp'}`,
+      // `user_email=${value.user_email}&user_pass=${value.user_pass}&action=${'wp_users'}`,
       { headers, responseType: 'text' }
     )
       .subscribe(
         data => {
           console.log("POST Request is successful", data);
-          this.router.navigate(['login'])
+          this.router.navigate(['otp'])
         },
         error => {
           console.log("Error", error);

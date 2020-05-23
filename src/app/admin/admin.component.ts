@@ -12,8 +12,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class AdminComponent implements OnInit {
   signupForm: any;
   jsonapifile: Object;
-userForm:FormGroup;
-  constructor(private router: Router, private http:HttpClient ,private service:ApiService) {
+  userForm: FormGroup;
+  constructor(private router: Router, private http: HttpClient, private service: ApiService) {
     this.userForm = new FormGroup({
       user_login: new FormControl(''),
       user_email: new FormControl(''),
@@ -21,22 +21,23 @@ userForm:FormGroup;
       user_pass: new FormControl(''),
       action: new FormControl('wp_users')
     });
-   }
-
-   signupuser(value) {
-     console.log("value is",value)
-    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-    return this.http.post(`http://localhost/wordpress/wp-json/custom-plugin/signup`,
-    `&user_login=${value.user_login}&user_email=${value.user_email}&user_nicename=${value.user_nicename}&user_pass=${value.user_pass}
-    &action=${'wp_users'}`,
-    { headers , responseType: 'text' })
-   .subscribe(data=>{
-     console.log("data is ",data)
-     this.router.navigate(['login'])
-   }) 
   }
-
   ngOnInit(): void {
   }
 
+  signupuser(value) {
+    console.log("value is", value)
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return this.http.post(`http://localhost/wordpress/wp-json/custom-plugin/signup`,
+      `&user_login=${value.user_login}&user_email=${value.user_email}&user_nicename=${value.user_nicename}&user_pass=${value.user_pass}
+    &action=${'wp_users'}`,
+      { headers, responseType: 'text' })
+      .subscribe(data => {
+        console.log("data is ", data)
+        this.router.navigate(['login'])
+      }),
+    this.service.emailuser(value).subscribe(data => {
+      // console.log("this is user id", data)
+    })
+  }
 }

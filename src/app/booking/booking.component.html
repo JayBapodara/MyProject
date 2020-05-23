@@ -114,8 +114,8 @@
           <th>Adult</th>
           <th>Children</th>
           <th>Edit</th>
-          <!-- <th>Update</th> -->
           <th>Delete</th>
+          <th>Status</th>
        </tr>
     </thead>
     <tbody>
@@ -129,14 +129,11 @@
           <td>{{ item.post_parent }}</td>
           <td>{{ item.post_password }}</td>
           <td><a class="btn btn-sm text-white btn-success" (click)= "update(item)">Edit</a></td>
-          <!-- <td><a class="btn btn-sm text-white btn-primary">Update</a></td> -->
-          <!-- <td><button type="submit" class="btn btn-danger" (click) = "delete(item.id)">delete</button></td> -->
           <td><a class="btn btn-sm text-white btn-danger" (click)= "delete(item.id)">Delete</a></td>
+          <td>{{ item.post_status }}</td> 
        </tr>
     </tbody>
  </table>
-<!-- <div>
-    {{ data | json }}
-</div> -->
+
 
 <router-outlet></router-outlet>

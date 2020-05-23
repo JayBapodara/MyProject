@@ -149,104 +149,112 @@ class Ajax_Controller extends Controller {
 				/* translators: 1: user display name 2: user ID 3: user email */
 				'display'    => sprintf( esc_html__( '%1$s (#%2$s - %3$s)', 'awebooking' ), $customer->first_name . ' ' . $customer->last_name, $customer->ID, $customer->user_email ),
 			];
-		}
-
-		return new Json_Response( $found_customers );
+			// <button class="btn-success" onclick="slnMyAccount.showRateForm(<?php echo $item['id']; ?>);">
+			// <?php _e('Confirm','salon-booking-system');?>
+		</button>
+		<button class="btn-danger" onclick="slnMyAccount.showRateForm(<?php echo $item['id']; ?>);">
+			<?php _e('Reject','salon-booking-system');?>
+		</button>
 	}
 
-	/**
-	 * Query for services.
-	 *
-	 * @param  \WPLibs\Http\Request $request The current request.
-	 * @return \WPLibs\Http\Response|mixed
-	 */
-	public function search_services( Request $request ) {
-		$term = abrs_clean( stripslashes( $request->get( 'term' ) ) );
-		if ( empty( $term ) ) {
-			return [];
-		}
+	return new Json_Response( $found_customers );
+}
 
-		$services = [];
+/**
+* Query for services.
+*
+* @param  \WPLibs\Http\Request $request The current request.
+* @return \WPLibs\Http\Response|mixed
+*/
+public function search_services( Request $request ) {
+$term = abrs_clean( stripslashes( $request->get( 'term' ) ) );
+if ( empty( $term ) ) {
+return [];
+}
 
-		// First, check if term is numeric so we just search by ID.
-		if ( is_numeric( $term ) ) {
-			$service = abrs_get_service( absint( $term ) );
+$services = [];
 
-			if ( $service ) {
-				$services = abrs_collect( [ $service ] );
-			}
-		}
+// First, check if term is numeric so we just search by ID.
+if ( is_numeric( $term ) ) {
+$service = abrs_get_service( absint( $term ) );
 
-		if ( empty( $services ) ) {
-			$services = abrs_list_services([
-				's'            => $term,
-				'post__not_in' => wp_parse_id_list( $request->get( 'exclude', [] ) ),
-			]);
-		}
+if ( $service ) {
+$services = abrs_collect( [ $service ] );
+}
+}
 
-		return new Json_Response( $services );
-	}
+if ( empty( $services ) ) {
+$services = abrs_list_services([
+'s'            => $term,
+'post__not_in' => wp_parse_id_list( $request->get( 'exclude', [] ) ),
+]);
+}
 
-	/**
-	 * Check the rates.
-	 *
-	 * @param  \WPLibs\Http\Request $request The current request.
-	 * @return \WPLibs\Http\Response|mixed
-	 */
-	public function check_rates( Request $request ) {
-		if ( $request->filled( 'booked' ) ) {
-			$this->fill_booked_request( $request );
-		}
+return new Json_Response( $services );
+}
 
-		if ( ! $request->filled( 'check_in', 'check_out', 'room_type' ) ) {
-			return new Json_Response( [ 'status' => 'error' ], 400 );
-		}
+/**
+* Check the rates.
+*
+* @param  \WPLibs\Http\Request $request The current request.
+* @return \WPLibs\Http\Response|mixed
+*/
+public function check_rates( Request $request ) {
+if ( $request->filled( 'booked' ) ) {
+$this->fill_booked_request( $request );
+}
 
-		$args = $request->only(
-			'adults', 'children', 'infants', 'check_in', 'check_out', 'room_type', 'rate_plan'
-		);
+if ( ! $request->filled( 'check_in', 'check_out', 'room_type' ) ) {
+return new Json_Response( [ 'status' => 'error' ], 400 );
+}
 
-		$room_rate = abrs_retrieve_room_rate( array_merge( $args, [
-			'request' => $request,
-		] ) );
+$args = $request->only(
+'adults', 'children', 'infants', 'check_in', 'check_out', 'room_type', 'rate_plan'
+);
 
-		if ( is_wp_error( $room_rate ) ) {
-			return new Json_Response( [
-				'status'  => 'error',
-				'message' => $room_rate->get_error_message(),
-			], 400 );
-		}
+$room_rate = abrs_retrieve_room_rate( array_merge( $args, [
+'request' => $request,
+] ) );
 
-		$data = [
-			'prices'                => $room_rate->get_prices(),
-			'breakdown'             => $room_rate->get_breakdown()->all(),
-			'additional_rates'      => $room_rate->get_additional_rates(),
-			'additional_breakdowns' => array_map( function ( $breakdown ) {
-				return $breakdown->all();
-			}, $room_rate->get_additional_breakdowns() ),
-		];
+if ( is_wp_error( $room_rate ) ) {
+return new Json_Response( [
+'status'  => 'error',
+'message' => $room_rate->get_error_message(),
+], 400 );
+}
 
-		// @codingStandardsIgnoreLine
-		return new Json_Response( [ 'status' => 'success', 'data' => $data ] );
-	}
+$data = [
+'prices'                => $room_rate->get_prices(),
+'breakdown'             => $room_rate->get_breakdown()->all(),
+'additional_rates'      => $room_rate->get_additional_rates(),
+'additional_breakdowns' => array_map( function ( $breakdown ) {
+return $breakdown->all();
+}, $room_rate->get_additional_breakdowns() ),
+];
 
-	/**
-	 * //
-	 *
-	 * @param  \WPLibs\Http\Request $request The current request.
-	 */
-	protected function fill_booked_request( Request $request ) {
-		$booking_item = abrs_get_booking_item( $request->get( 'booked' ) );
+// @codingStandardsIgnoreLine
+return new Json_Response( [ 'status' => 'success', 'data' => $data ] );
+}
 
-		if ( $booking_item instanceof Room_Item ) {
-			$request['room_type'] = $booking_item->get( 'room_type_id' );
-			$request['rate_plan'] = $booking_item->get( 'rate_plan_id' );
+/**
+* //
+*
+* @param  \WPLibs\Http\Request $request The current request.
 
-			foreach ( [ 'adults', 'infants', 'children', 'check_in', 'check_out' ] as $key ) {
-				if ( ! $request->has( $key ) ) {
-					$request[ $key ] = $booking_item->get( $key );
-				}
-			}
-		}
-	}
+*/
+
+protected function fill_booked_request( Request $request ) {
+$booking_item = abrs_get_booking_item( $request->get( 'booked' ) );
+
+if ( $booking_item instanceof Room_Item ) {
+$request['room_type'] = $booking_item->get( 'room_type_id' );
+$request['rate_plan'] = $booking_item->get( 'rate_plan_id' );
+
+foreach ( [ 'adults', 'infants', 'children', 'check_in', 'check_out' ] as $key ) {
+if ( ! $request->has( $key ) ) {
+$request[ $key ] = $booking_item->get( $key );
+}
+}
+}
+}
 }

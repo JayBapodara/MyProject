@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Subject } from 'rxjs';
+import { FormGroup } from '@angular/forms';
 // import { userInfo } from 'os';
 
 
@@ -22,10 +23,10 @@ export class ApiService {
     return this.httpClient.get('http://localhost/wordpress/wp-json/custom-plugin/login');
   }
 
-  signupuser(){
+  signupuser() {
     return this.httpClient.get('http://localhost/wordpress/wp-json/custom-plugin/signup');
   }
-  sendMessage(message:any){
+  sendMessage(message: any) {
     this._techerMessageSource.next(message);
   }
   isadminrights(): boolean {
@@ -51,24 +52,32 @@ export class ApiService {
       (`http://localhost/wordpress/wp-json/custom-plugin/book?&pinged=${id}`,
         { headers })
   }
-  booking(value){
+  booking(value) {
     const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
     console.log('object value', value)
     var log_id = localStorage.getItem('ID');
     console.log(log_id);
-  
+
     return this.httpClient.post(
       ` http://localhost/wordpress/wp-json/custom-plugin/hotel`,
-        `&log_id=${log_id}&post_title=${value.post_title}&post_mime_type=${value.post_mime_type}&post_content=${value.post_content}&post_date=${value.post_date}
+      `&log_id=${log_id}&post_title=${value.post_title}&post_mime_type=${value.post_mime_type}&post_content=${value.post_content}&post_date=${value.post_date}
       &post_date_gmt=${value.post_date_gmt}&post_parent=${value.post_parent}&post_password=${value.post_password}
       &action=${'wp_posts'}`,
       { headers, responseType: 'text' })
   }
-  deletedata(id){
-    const headers = new HttpHeaders().set('Content-Type','application/x-www-form-urlencoded');
-      return this.httpClient.delete(`http://localhost/wordpress/wp-json/custom-plugin/delete?ID=${id}`,
-      {headers , responseType:'text'} )
-    }
+  deletedata(id) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return this.httpClient.delete(`http://localhost/wordpress/wp-json/custom-plugin/delete?ID=${id}`,
+      { headers, responseType: 'text' })
+  }
+  emailuser(value) {
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    return this.httpClient.post(`http://localhost/wordpress/wp-json/custom-plugin/emailpass?user_email=${value.user_email}`,
+      { headers, responseType: 'text' })
+  }
+  otp(value){
+    const headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+ return this.httpClient.get(`http://localhost/wordpress/wp-json/custom-plugin/otpcompare?otp=${value.otp}`,
+  { headers , responseType: 'text' })
+  }
 }
-
-

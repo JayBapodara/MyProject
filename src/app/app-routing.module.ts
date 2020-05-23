@@ -7,6 +7,10 @@ import {ActivateGuard} from './activate.guard';
 import {Active2Guard} from './active2.guard';
 import { AdminComponent } from './admin/admin.component';
 import { ForgotComponent } from './forgot/forgot.component';
+import { ForgototpComponent } from './forgototp/forgototp.component';
+import { OtpComponent } from './otp/otp.component';
+
+
 
 
 
@@ -16,7 +20,11 @@ const routes: Routes = [
   { path: 'home', component: HomeComponent, pathMatch: 'full' },
   { path: 'booking', component: BookingComponent, pathMatch: 'full', canActivate:[Active2Guard] },
   { path: 'admin', component: AdminComponent, pathMatch: 'full' },
-  { path: 'forgot', component: ForgotComponent, pathMatch: 'full' }
+  { path: 'forgot', component: ForgotComponent, pathMatch: 'full' },
+  { path: 'forgototp', component: ForgototpComponent, pathMatch: 'full' },
+  { path: 'otp', component: OtpComponent, pathMatch: 'full' }
+
+
 
 
 ];

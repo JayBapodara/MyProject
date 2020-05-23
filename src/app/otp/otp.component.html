@@ -1,0 +1,49 @@
+<style>
+    .form {
+        margin: 120px 0;
+    }
+
+    .abc {
+        margin-left: 60px;
+    }
+
+    #partitioned {
+        padding-left: 15px;
+        letter-spacing: 42px;
+        border: 0;
+        background-image: linear-gradient(to left, black 70%, rgba(255, 255, 255, 0) 0%);
+        background-position: bottom;
+        background-size: 50px 1px;
+        background-repeat: repeat-x;
+        background-position-x: 35px;
+        width: 220px;
+    }
+
+    .time {
+        color: green;
+    }
+
+    .onemin {
+        color: orange;
+    }
+
+    .sec {
+        color: red;
+    }
+</style>
+<div class="container">
+    <div class="border p-4 w-50 mx-auto form">
+        <div class="header">
+            <!-- <h1 class="text-center">SEND OTP</h1> -->
+        </div>
+        <form [formGroup]='OTPForm'>
+            <div class="form-group">
+                <label>OTP:</label>
+                <input id="partitioned" type="text" maxlength="6" formControlName="otp" />
+                <countdown time="" [config]="config" [ngClass]="timerColor()" (event)="firstEvent($event)"></countdown>
+            </div>
+            <button type="submit" class="btn btn-info w-50 abc mb-3" (click)="Done(OTPForm.value)">Done</button>
+        </form>
+    </div>
+</div>
+<router-outlet></router-outlet>

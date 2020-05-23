@@ -215,6 +215,8 @@ class Booking_Room_Controller extends Controller {
 		return $this->redirect()->to( get_edit_post_link( $room_item->get( 'booking_id' ), 'raw' ) );
 	}
 
+	
+
 	/**
 	 * Perform delete a booking room.
 	 *

@@ -1998,24 +1998,6 @@ function remove_accents( $string ) {
 function sanitize_file_name( $filename ) {
 	$filename_raw  = $filename;
 	$special_chars = array( '?', '[', ']', '/', '\\', '=', '<', '>', ':', ';', ',', "'", '"', '&', '$', '#', '*', '(', ')', '|', '~', '`', '!', '{', '}', '%', '+', chr( 0 ) );
-
-	// Check for support for utf8 in the installed PCRE library once and store the result in a static.
-	static $utf8_pcre = null;
-	if ( ! isset( $utf8_pcre ) ) {
-		// phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
-		$utf8_pcre = @preg_match( '/^./u', 'a' );
-	}
-
-	if ( ! seems_utf8( $filename ) ) {
-		$_ext     = pathinfo( $filename, PATHINFO_EXTENSION );
-		$_name    = pathinfo( $filename, PATHINFO_FILENAME );
-		$filename = sanitize_title_with_dashes( $_name ) . '.' . $_ext;
-	}
-
-	if ( $utf8_pcre ) {
-		$filename = preg_replace( "#\x{00a0}#siu", ' ', $filename );
-	}
-
 	/**
 	 * Filters the list of characters to remove from a filename.
 	 *
@@ -2025,6 +2007,7 @@ function sanitize_file_name( $filename ) {
 	 * @param string $filename_raw  Filename as it was passed into sanitize_file_name().
 	 */
 	$special_chars = apply_filters( 'sanitize_file_name_chars', $special_chars, $filename_raw );
+	$filename      = preg_replace( "#\x{00a0}#siu", ' ', $filename );
 	$filename      = str_replace( $special_chars, '', $filename );
 	$filename      = str_replace( array( '%20', '+' ), '-', $filename );
 	$filename      = preg_replace( '/[\r\n\t -]+/', '-', $filename );
@@ -3018,19 +3001,19 @@ function wp_rel_nofollow( $text ) {
  */
 function wp_rel_nofollow_callback( $matches ) {
 	$text = $matches[1];
-	$atts = wp_kses_hair( $matches[1], wp_allowed_protocols() );
+	$atts = shortcode_parse_atts( $matches[1] );
 	$rel  = 'nofollow';
 
 	if ( ! empty( $atts['href'] ) ) {
-		if ( in_array( strtolower( wp_parse_url( $atts['href']['value'], PHP_URL_SCHEME ) ), array( 'http', 'https' ), true ) ) {
-			if ( strtolower( wp_parse_url( $atts['href']['value'], PHP_URL_HOST ) ) === strtolower( wp_parse_url( home_url(), PHP_URL_HOST ) ) ) {
+		if ( in_array( strtolower( wp_parse_url( $atts['href'], PHP_URL_SCHEME ) ), array( 'http', 'https' ), true ) ) {
+			if ( strtolower( wp_parse_url( $atts['href'], PHP_URL_HOST ) ) === strtolower( wp_parse_url( home_url(), PHP_URL_HOST ) ) ) {
 				return "<a $text>";
 			}
 		}
 	}
 
 	if ( ! empty( $atts['rel'] ) ) {
-		$parts = array_map( 'trim', explode( ' ', $atts['rel']['value'] ) );
+		$parts = array_map( 'trim', explode( ' ', $atts['rel'] ) );
 		if ( false === array_search( 'nofollow', $parts ) ) {
 			$parts[] = 'nofollow';
 		}
@@ -3039,11 +3022,7 @@ function wp_rel_nofollow_callback( $matches ) {
 
 		$html = '';
 		foreach ( $atts as $name => $value ) {
-			if ( isset( $value['vless'] ) && 'y' === $value['vless'] ) {
-				$html .= $name . ' ';
-			} else {
-				$html .= "{$name}=\"" . esc_attr( $value['value'] ) . '" ';
-			}
+			$html .= "{$name}=\"" . esc_attr( $value ) . '" ';
 		}
 		$text = trim( $html );
 	}
@@ -3060,26 +3039,8 @@ function wp_rel_nofollow_callback( $matches ) {
  */
 function wp_targeted_link_rel( $text ) {
 	// Don't run (more expensive) regex if no links with targets.
-	if ( stripos( $text, 'target' ) === false || stripos( $text, '<a ' ) === false || is_serialized( $text ) ) {
-		return $text;
-	}
-
-	$script_and_style_regex = '/<(script|style).*?<\/\\1>/si';
-
-	preg_match_all( $script_and_style_regex, $text, $matches );
-	$extra_parts = $matches[0];
-	$html_parts  = preg_split( $script_and_style_regex, $text );
-
-	foreach ( $html_parts as &$part ) {
-		$part = preg_replace_callback( '|<a\s([^>]*target\s*=[^>]*)>|i', 'wp_targeted_link_rel_callback', $part );
-	}
-
-	$text = '';
-	for ( $i = 0; $i < count( $html_parts ); $i++ ) {
-		$text .= $html_parts[ $i ];
-		if ( isset( $extra_parts[ $i ] ) ) {
-			$text .= $extra_parts[ $i ];
-		}
+	if ( stripos( $text, 'target' ) !== false && stripos( $text, '<a ' ) !== false ) {
+		$text = preg_replace_callback( '|<a\s([^>]*target\s*=[^>]*)>|i', 'wp_targeted_link_rel_callback', $text );
 	}
 
 	return $text;
@@ -3097,17 +3058,8 @@ function wp_targeted_link_rel( $text ) {
  * @return string HTML A Element with rel noreferrer noopener in addition to any existing values
  */
 function wp_targeted_link_rel_callback( $matches ) {
-	$link_html          = $matches[1];
-	$original_link_html = $link_html;
-
-	// Consider the html escaped if there are no unescaped quotes
-	$is_escaped = ! preg_match( '/(^|[^\\\\])[\'"]/', $link_html );
-	if ( $is_escaped ) {
-		// Replace only the quotes so that they are parsable by wp_kses_hair, leave the rest as is
-		$link_html = preg_replace( '/\\\\([\'"])/', '$1', $link_html );
-	}
-
-	$atts = wp_kses_hair( $link_html, wp_allowed_protocols() );
+	$link_html = $matches[1];
+	$rel_match = array();
 
 	/**
 	 * Filters the rel values that are added to links with `target` attribute.
@@ -3119,21 +3071,35 @@ function wp_targeted_link_rel_callback( $matches ) {
 	 */
 	$rel = apply_filters( 'wp_targeted_link_rel', 'noopener noreferrer', $link_html );
 
-	// Return early if no rel values to be added or if no actual target attribute
-	if ( ! $rel || ! isset( $atts['target'] ) ) {
-		return "<a $original_link_html>";
+	// Avoid additional regex if the filter removes rel values.
+	if ( ! $rel ) {
+		return "<a $link_html>";
 	}
 
-	if ( isset( $atts['rel'] ) ) {
-		$all_parts = preg_split( '/\s/', "{$atts['rel']['value']} $rel", -1, PREG_SPLIT_NO_EMPTY );
-		$rel       = implode( ' ', array_unique( $all_parts ) );
+	// Value with delimiters, spaces around are optional.
+	$attr_regex = '|rel\s*=\s*?(\\\\{0,1}["\'])(.*?)\\1|i';
+	preg_match( $attr_regex, $link_html, $rel_match );
+
+	if ( empty( $rel_match[0] ) ) {
+		// No delimiters, try with a single value and spaces, because `rel =  va"lue` is totally fine...
+		$attr_regex = '|rel\s*=(\s*)([^\s]*)|i';
+		preg_match( $attr_regex, $link_html, $rel_match );
 	}
 
-	$atts['rel']['whole'] = 'rel="' . esc_attr( $rel ) . '"';
-	$link_html            = join( ' ', array_column( $atts, 'whole' ) );
-
-	if ( $is_escaped ) {
-		$link_html = preg_replace( '/[\'"]/', '\\\\$0', $link_html );
+	if ( ! empty( $rel_match[0] ) ) {
+		$parts     = preg_split( '|\s+|', strtolower( $rel_match[2] ) );
+		$parts     = array_map( 'esc_attr', $parts );
+		$needed    = explode( ' ', $rel );
+		$parts     = array_unique( array_merge( $parts, $needed ) );
+		$delimiter = trim( $rel_match[1] ) ? $rel_match[1] : '"';
+		$rel       = 'rel=' . $delimiter . trim( implode( ' ', $parts ) ) . $delimiter;
+		$link_html = str_replace( $rel_match[0], $rel, $link_html );
+	} elseif ( preg_match( '|target\s*=\s*?\\\\"|', $link_html ) ) {
+		$link_html .= " rel=\\\"$rel\\\"";
+	} elseif ( preg_match( '#(target|href)\s*=\s*?\'#', $link_html ) ) {
+		$link_html .= " rel='$rel'";
+	} else {
+		$link_html .= " rel=\"$rel\"";
 	}
 
 	return "<a $link_html>";
@@ -3262,7 +3228,7 @@ function convert_smilies( $text ) {
 			$content = $textarr[ $i ];
 
 			// If we're in an ignore block, wait until we find its closing tag
-			if ( '' == $ignore_block_element && preg_match( '/^<(' . $tags_to_ignore . ')[^>]*>/', $content, $matches ) ) {
+			if ( '' == $ignore_block_element && preg_match( '/^<(' . $tags_to_ignore . ')>/', $content, $matches ) ) {
 				$ignore_block_element = $matches[1];
 			}
 
@@ -4835,31 +4801,6 @@ function wp_pre_kses_less_than_callback( $matches ) {
 		return esc_html( $matches[0] );
 	}
 	return $matches[0];
-}
-
-/**
- * Remove non-allowable HTML from parsed block attribute values when filtering
- * in the post context.
- *
- * @since 5.3.1
- *
- * @param string         $string            Content to be run through KSES.
- * @param array[]|string $allowed_html      An array of allowed HTML elements
- *                                          and attributes, or a context name
- *                                          such as 'post'.
- * @param string[]       $allowed_protocols Array of allowed URL protocols.
- * @return string Filtered text to run through KSES.
- */
-function wp_pre_kses_block_attributes( $string, $allowed_html, $allowed_protocols ) {
-	/*
-	 * `filter_block_content` is expected to call `wp_kses`. Temporarily remove
-	 * the filter to avoid recursion.
-	 */
-	remove_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10 );
-	$string = filter_block_content( $string, $allowed_html, $allowed_protocols );
-	add_filter( 'pre_kses', 'wp_pre_kses_block_attributes', 10, 3 );
-
-	return $string;
 }
 
 /**

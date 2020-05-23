@@ -43,7 +43,7 @@ class Room_Type_List_Table extends Abstract_List_Table {
 		$show_columns['rate']      = esc_html__( 'Rack Rate', 'awebooking' );
 		$show_columns['occupancy'] = esc_html__( 'Occupancy', 'awebooking' );
 		$show_columns['date']      = esc_html__( 'Date', 'awebooking' );
-
+		$show_columns['action']    = esc_html__(  'Action', 'awebooking');
 		return array_merge( $columns, $show_columns );
 	}
 
@@ -87,7 +87,7 @@ class Room_Type_List_Table extends Abstract_List_Table {
 	}
 
 	/**
-	 * Display the hotel column.
+	 * Display the hotel column. bhai have a data kya display thai colum to add thai gai
 	 *
 	 * @return void
 	 */
@@ -213,4 +213,4 @@ class Room_Type_List_Table extends Abstract_List_Table {
 
 		return $query_vars;
 	}
-}
+}	

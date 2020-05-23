@@ -526,3 +526,15 @@ class Room_Rate {
 		return $this->prices;
 	}
 }
+
+
+
+ // <button class="btn-success">
+			// <?php _e('Confirm','salon-booking-system');?>
+		<!-- </button> -->
+		<button class="btn-danger" onclick="slnMyAccount.showRateForm(<?php echo $item['id']; ?>);">
+			<?php _e('Confirm','salon-booking-system');?>
+		</button>
+		<button class="btn-danger" onclick="slnMyAccount.showRateForm(<?php echo $item['id']; ?>);">
+			<?php _e('Reject','salon-booking-system');?>
+		</button>
