@@ -1,0 +1,28 @@
+<wpml-config>
+	<admin-texts>
+		<key name="theme_mods_doctorial">
+			<key name="doctorial_header_top_text"/>
+			<key name="doctorial_header_contact_number"/>
+			<key name="doctorial_header_contact_address"/>
+			<key name="doctorial_homepage_slider_category"/>
+			<key name="doctorial_homepage_slider_readmore"/>
+			<key name="doctorial_homepage_featured_category"/>
+			<key name="doctorial_homepage_about_page"/>
+			<key name="doctorial_homepage_about_category"/>
+			<key name="doctorial_homepage_service_page"/>
+			<key name="doctorial_homepage_service_category"/>
+			<key name="doctorial_homepage_cta_page"/>
+			<key name="doctorial_homepage_cta_button_text"/>
+			<key name="doctorial_homepage_cta_button_link"/>
+			<key name="doctorial_homepage_team_page"/>
+			<key name="doctorial_homepage_team_category"/>
+			<key name="doctorial_homepage_testimonial_page"/>
+			<key name="doctorial_homepage_testimonial_category"/>
+			<key name="doctorial_homepage_blog_page"/>
+			<key name="doctorial_homepage_blog_category"/>
+			<key name="doctorial_homepage_blog_readmore"/>
+			<key name="doctorial_homepage_contact_page"/>
+			<key name="doctorial_homepage_contact_form"/>
+		</key>
+	</admin-texts>
+</wpml-config>

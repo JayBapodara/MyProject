@@ -20,7 +20,7 @@
 
 // ** MySQL settings - You can get this info from your web host ** //
 /** The name of the database for WordPress */
-define( 'DB_NAME', 'tourism' );
+define( 'DB_NAME', 'pharmacy' );
 
 /** MySQL database username */
 define( 'DB_USER', 'root' );
@@ -46,14 +46,14 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         '*joTsRH#r^l8[c`^{Rw<)V_/b2nYH/e/mGv!HZt24K{LSQuZ;J0vd-0hIe76[]!n' );
-define( 'SECURE_AUTH_KEY',  'nlAA%L(DczI:SkBls|zQd7cI g3>.]Ro;kJR:@Q&;*A3GBfTj81-ro=Pz]uJG3|/' );
-define( 'LOGGED_IN_KEY',    'BEP +1$7cX=r[`pZJ=rcD/U/UWB+1Q`qSzHO>37?Wt^D2x9`j#`L-R[!cp`eTWRx' );
-define( 'NONCE_KEY',        'e4-0l0?AEz6sWg:%uq=cL8@nBmbr5PIS}150?*p@fQM6`%TkZLqQ,5H|A??,Q$;Q' );
-define( 'AUTH_SALT',        'iE*V{]3X61bwkwq[K,1|ij#?CA*5&0N^`9-efuRO2OfK>Kwj3M{,s=.Ghd^!Qar ' );
-define( 'SECURE_AUTH_SALT', ';?NiLE6i(qU)T0,Hv$$_,O;f6ymg$2wpd&@tL0SL|TY(~wQw.lGrV)(F0n=Mbiq1' );
-define( 'LOGGED_IN_SALT',   'hh3(-cNakA^%}0jj;gCtl=lowQp{S:Imt:P9&B?rpN(UVC:WeM3EB.#wK*REJs]:' );
-define( 'NONCE_SALT',       '!)Z3{A^rcVq7~Rm>~2tuG^ybHYBLz%eBwT3g=[L.*#4bQL&rrb,GQ:AY[%}{c;W=' );
+define( 'AUTH_KEY',         '#cZeN<YZ}4be_4C {y>OnHRmhQV|vFUj.Rg.ujDZ?wV!4iy%I^)G/0v>R;t.DPsz' );
+define( 'SECURE_AUTH_KEY',  '-2*;QsFau0)):w+Dyj!>xM?w1rn0Ys^cKZCuVzgr9<0bXv:W^[(e(c%v=bI($S8,' );
+define( 'LOGGED_IN_KEY',    ';hNuZ+45=t)4JCf2,xZL*js1qy9gf|%y(dzHEcU_QJ}ZA7eM]J=+m=`Ci*_F!I#,' );
+define( 'NONCE_KEY',        'Y%SbE4iU2$r}AV4P, 5N-G}dvhn(h3{}=(H}w$-c!$u#PyN*>JCOK){>Bk_O=f2n' );
+define( 'AUTH_SALT',        '/1%X4.=QDF2IN%rLEg6-h6zDFU68wMaxH#-~z#=^kX+?bX:h]7?i!iH<o ,}u6)y' );
+define( 'SECURE_AUTH_SALT', '<Hp3On%]q__v?wB7-8N56}PYnU8~.fM*970Q6p3o1LDJ)jj0hD>4{DbU%}BR>s&$' );
+define( 'LOGGED_IN_SALT',   's2S9%-UL2myn1eybvco`Jl^Mz%?.) :~:,Uc}xVnmmKbGwT2xmH+EOM%nQXV_`X%' );
+define( 'NONCE_SALT',       'L<Oz>BDs`5{](|-)|@eSKG4bmBl]V.q#g x;gH{0uY5`E)5}0a;:yHiu`p8>U^zf' );
 
 /**#@-*/
 
@@ -78,10 +78,6 @@ $table_prefix = 'wp_';
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
 define( 'WP_DEBUG', false );
-// define( 'WP_DEBUG_DISPLAY', false );
-// define( 'WP_DEBUG_LOG', true );
-// @ini_set ( 'display_errors',0 );
-// define( 'SCRIPT_DEBUG', true );
 
 /* That's all, stop editing! Happy publishing. */
 

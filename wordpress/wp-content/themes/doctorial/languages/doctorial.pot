@@ -1,0 +1,663 @@
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2018-02-06 14:57+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Rajan Maharjan <rajanmaharjan45@gmail.com>\n"
+"Language-Team: \n"
+"Language: \n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco - https://localise.biz/"
+
+#: 404.php:12
+msgid "Oops! That page can&rsquo;t be found."
+msgstr ""
+
+#. 1: title.
+#: comments.php:34
+#, php-format
+msgid "One thought on &ldquo;%1$s&rdquo;"
+msgstr ""
+
+#. 1: comment count number, 2: title.
+#: comments.php:40
+#, php-format
+msgctxt "comments title"
+msgid "%1$s thought on &ldquo;%2$s&rdquo;"
+msgid_plural "%1$s thoughts on &ldquo;%2$s&rdquo;"
+msgstr[0] ""
+msgstr[1] ""
+
+#: comments.php:50 comments.php:71
+msgid "Comment navigation"
+msgstr ""
+
+#: comments.php:53 comments.php:74
+msgid "Older Comments"
+msgstr ""
+
+#: comments.php:54 comments.php:75
+msgid "Newer Comments"
+msgstr ""
+
+#: comments.php:88
+msgid "Comments are closed."
+msgstr ""
+
+#: footer.php:65
+msgid "https://wordpress.org/"
+msgstr ""
+
+#: footer.php:67
+#, php-format
+msgid "Proudly powered by %s"
+msgstr ""
+
+#: footer.php:71
+#, php-format
+msgid "Theme: %1$s by %2$s."
+msgstr ""
+
+#: footer.php:87
+msgid "Go to top"
+msgstr ""
+
+#: functions.php:50
+msgid "Primary"
+msgstr ""
+
+#: functions.php:98
+msgid "Sidebar"
+msgstr ""
+
+#: functions.php:100 functions.php:109 functions.php:118 functions.php:127
+#: functions.php:136 functions.php:145
+msgid "Add widgets here."
+msgstr ""
+
+#: functions.php:107
+msgid "Shop Sidebar"
+msgstr ""
+
+#: functions.php:116
+msgid "Footer One"
+msgstr ""
+
+#: functions.php:125
+msgid "Footer Two"
+msgstr ""
+
+#: functions.php:134
+msgid "Footer Three"
+msgstr ""
+
+#: functions.php:143
+msgid "Footer Four"
+msgstr ""
+
+#: header.php:25
+msgid "Skip to content"
+msgstr ""
+
+#: header.php:68
+msgid "Troll Free"
+msgstr ""
+
+#: header.php:83 inc/admin-panel/doctorial-header-panel.php:86
+msgid "Address"
+msgstr ""
+
+#: search.php:14
+#, php-format
+msgid "Search Results for: %s"
+msgstr ""
+
+#: searchform.php:6
+msgid "Search..."
+msgstr ""
+
+#: searchform.php:7
+msgid ""
+"Search\n"
+"  "
+msgstr ""
+
+#: searchform.php:18 searchform.php:19
+msgid "Search for:"
+msgstr ""
+
+#. Name of the template
+#. Name of the template
+msgid "Team"
+msgstr ""
+
+#. Name of the template
+msgid "Service"
+msgstr ""
+
+#. Name of the template
+msgid "Testimonial"
+msgstr ""
+
+#. Name of the template
+msgid "Homepage"
+msgstr ""
+
+#: tpl-home.php:13 tpl-home.php:71 tpl-home.php:135 tpl-home.php:281
+#: inc/admin-panel/doctorial-homepage-panel.php:509
+msgid "Read more"
+msgstr ""
+
+#: tpl-home.php:197
+msgid "Hire us"
+msgstr ""
+
+#: tpl-home.php:261 template-parts/content-blog.php:38
+#: template-parts/content-team.php:20 template-parts/content.php:42
+msgid "Read More"
+msgstr ""
+
+#: inc/doctorial-customizer.php:10
+msgid "Basic Setting"
+msgstr ""
+
+#: inc/doctorial-customizer.php:25
+msgid "Web Layout"
+msgstr ""
+
+#: inc/doctorial-customizer.php:42
+#: inc/admin-panel/doctorial-homepage-panel.php:43
+#: inc/admin-panel/doctorial-homepage-panel.php:263
+#: inc/admin-panel/doctorial-homepage-panel.php:316
+#: inc/admin-panel/doctorial-homepage-panel.php:387
+#: inc/admin-panel/doctorial-homepage-panel.php:459
+#: inc/admin-panel/doctorial-homepage-panel.php:552
+#: inc/admin-panel/doctorial-homepage-panel.php:646
+#: inc/admin-panel/doctorial-homepage-panel.php:719
+#: inc/admin-panel/doctorial-homepage-panel.php:795
+msgid "Do you want to enable this section?"
+msgstr ""
+
+#: inc/doctorial-customizer.php:48 inc/doctorial-sanitize.php:36
+msgid "Fullwidth Layout"
+msgstr ""
+
+#: inc/doctorial-customizer.php:49 inc/doctorial-sanitize.php:37
+msgid "Boxed Layout"
+msgstr ""
+
+#: inc/doctorial-customizer.php:56 inc/doctorial-customizer.php:73
+msgid "Footer Copyright"
+msgstr ""
+
+#: inc/doctorial-customizer.php:74
+msgid "Enter text to add Copyright text on footer. "
+msgstr ""
+
+#: inc/doctorial-function.php:46
+#: inc/admin-panel/doctorial-homepage-panel.php:63
+#: inc/admin-panel/doctorial-homepage-panel.php:284
+#: inc/admin-panel/doctorial-homepage-panel.php:355
+#: inc/admin-panel/doctorial-homepage-panel.php:426
+#: inc/admin-panel/doctorial-homepage-panel.php:498
+#: inc/admin-panel/doctorial-homepage-panel.php:685
+#: inc/admin-panel/doctorial-homepage-panel.php:759
+msgid "Select category"
+msgstr ""
+
+#: inc/doctorial-function.php:71 inc/admin-panel/doctorial-social-panel.php:72
+msgid "Facebook"
+msgstr ""
+
+#: inc/doctorial-function.php:75 inc/admin-panel/doctorial-social-panel.php:91
+msgid "Twitter"
+msgstr ""
+
+#: inc/doctorial-function.php:79 inc/admin-panel/doctorial-social-panel.php:110
+msgid "Google Plus"
+msgstr ""
+
+#: inc/doctorial-function.php:83
+msgid "Youtube"
+msgstr ""
+
+#: inc/doctorial-function.php:87 inc/admin-panel/doctorial-social-panel.php:148
+msgid "Pinterest"
+msgstr ""
+
+#: inc/doctorial-function.php:91 inc/admin-panel/doctorial-social-panel.php:167
+msgid "Linkedin"
+msgstr ""
+
+#: inc/doctorial-function.php:95
+msgid "Flickr"
+msgstr ""
+
+#: inc/doctorial-function.php:99 inc/admin-panel/doctorial-social-panel.php:206
+msgid "Vimeo"
+msgstr ""
+
+#: inc/doctorial-function.php:103
+msgid "instagram"
+msgstr ""
+
+#: inc/doctorial-function.php:107
+msgid "tumblr"
+msgstr ""
+
+#: inc/doctorial-function.php:111
+msgid "delicious"
+msgstr ""
+
+#: inc/doctorial-function.php:115
+msgid "stumbleupon"
+msgstr ""
+
+#: inc/doctorial-function.php:119
+msgid "skype:"
+msgstr ""
+
+#: inc/doctorial-function.php:119
+#: inc/admin-panel/doctorial-social-panel.php:320
+msgid "Skype"
+msgstr ""
+
+#: inc/doctorial-function.php:130
+msgid "Get Started"
+msgstr ""
+
+#. used between list items, there is a space after the comma
+#. used between list items, there is a space after the comma
+#: inc/doctorial-function.php:232 inc/template-tags.php:52
+#: inc/template-tags.php:59
+msgid ", "
+msgstr ""
+
+#: inc/doctorial-function.php:235 inc/template-tags.php:55
+#, php-format
+msgid "Posted in %1$s"
+msgstr ""
+
+#. %s: post author.
+#: inc/doctorial-function.php:243
+#, php-format
+msgctxt "post author"
+msgid " %s"
+msgstr ""
+
+#: inc/doctorial-sanitize.php:48
+#: inc/admin-panel/doctorial-homepage-panel.php:172
+msgid "Fade"
+msgstr ""
+
+#: inc/doctorial-sanitize.php:49
+#: inc/admin-panel/doctorial-homepage-panel.php:173
+msgid "Horizontal"
+msgstr ""
+
+#: inc/doctorial-sanitize.php:50
+#: inc/admin-panel/doctorial-homepage-panel.php:174
+msgid "Vertical"
+msgstr ""
+
+#: inc/doctorial-woo.php:25
+msgid "Home"
+msgstr ""
+
+#: inc/template-tags.php:29
+#, php-format
+msgctxt "post date"
+msgid "Posted on %s"
+msgstr ""
+
+#: inc/template-tags.php:35
+#, php-format
+msgctxt "post author"
+msgid "by %s"
+msgstr ""
+
+#: inc/template-tags.php:62
+#, php-format
+msgid "Tagged %1$s"
+msgstr ""
+
+#. %s: post title
+#: inc/template-tags.php:69
+#, php-format
+msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
+msgstr ""
+
+#. %s: Name of current post
+#. %s: Name of current post
+#: inc/template-tags.php:76 template-parts/content-page.php:33
+#, php-format
+msgid "Edit %s"
+msgstr ""
+
+#: template-parts/content-none.php:14
+msgid "Nothing Found"
+msgstr ""
+
+#: template-parts/content-none.php:25
+#, php-format
+msgid ""
+"Ready to publish your first post? <a href=\"%1$s\">Get started here</a>."
+msgstr ""
+
+#: template-parts/content-none.php:38
+msgid ""
+"Sorry, but nothing matched your search terms. Please try again with some "
+"different keywords."
+msgstr ""
+
+#: template-parts/content-none.php:44
+msgid ""
+"It seems we can&rsquo;t find what you&rsquo;re looking for. Perhaps "
+"searching can help."
+msgstr ""
+
+#: template-parts/content-page.php:20 template-parts/content-single.php:14
+#: template-parts/content.php:81
+msgid "Pages:"
+msgstr ""
+
+#. %s: Name of current post.
+#: template-parts/content.php:76
+#, php-format
+msgid "Continue reading %s <span class=\"meta-nav\">&rarr;</span>"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:11
+msgid "Header Settings of the theme"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:13
+msgid "Header Settings"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:22
+msgid "Top Header Settings"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:37
+msgid "Enter text"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:38
+msgid "Enter text to show on top header."
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:46
+msgid "Contact Details"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:54
+msgid "Toll Free"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:62
+msgid "Contact Title"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:63
+msgid "Enter contact title to show in header."
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:78
+msgid "Contact no."
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:79
+msgid "Enter contact no. to show in header."
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:94
+msgid "Address Title"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:95
+msgid "Enter contact address Title to show in header."
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:111
+msgid "Contact Address"
+msgstr ""
+
+#: inc/admin-panel/doctorial-header-panel.php:112
+msgid "Enter contact address to show in header."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:11
+msgid "Homepage Settings for the theme"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:13
+msgid "Homepage Settings"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:22
+msgid "Slider Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:23
+msgid "Setup Slider Settings"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:74
+msgid "Detail"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:83
+msgid "Read more text"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:103
+msgid "Show control"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:125
+msgid "Show pager"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:149
+msgid "Auto Transition"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:169
+msgid "Transition Type(Slide/Fade)"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:192
+msgid "Transition Speed"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:211
+msgid "Slider Pause"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:232
+msgid "Slider Caption"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:233
+msgid "Select Yes to show titles and description over Slider"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:243
+msgid "Featured Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:244
+msgid "Setup Featured Settings."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:296
+msgid "About Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:297
+msgid "Setup About Settings."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:337
+#: inc/admin-panel/doctorial-homepage-panel.php:408
+#: inc/admin-panel/doctorial-homepage-panel.php:480
+#: inc/admin-panel/doctorial-homepage-panel.php:573
+#: inc/admin-panel/doctorial-homepage-panel.php:667
+#: inc/admin-panel/doctorial-homepage-panel.php:740
+#: inc/admin-panel/doctorial-homepage-panel.php:816
+msgid "Section Page"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:367
+msgid "Service Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:368
+msgid "Setup Service Settings."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:439
+msgid "Blog Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:440
+msgid "Setup Blog Settings"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:518
+msgid "Readmore button text"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:532
+msgid "Call to Action Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:533
+msgid "Setup Call to Action(CTA) Settings."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:583
+msgid "Hire me"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:592
+msgid "Button text"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:611
+msgid "Button link"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:626
+msgid "Doctorial Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:627
+msgid "Setup Doctorial Settings."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:699
+msgid "Testimonial Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:700
+msgid "Setup Testimonial Settings."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:775
+msgid "Contact Section"
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:776
+msgid "Setup Contact Settings."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:834
+msgid "Enter Shortcode."
+msgstr ""
+
+#: inc/admin-panel/doctorial-homepage-panel.php:851
+msgid "Upload Image"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:10
+msgid "Social Setting"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:30
+msgid "Enable Disable Social Icons in header"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:52
+msgid "Enable Disable Social Icons in Footer"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:129
+msgid "YouTube"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:186
+msgid "Flicker"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:225
+msgid "Stumbleupon"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:244
+msgid "Instagram"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:263
+msgid "Sound Cloud"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:282
+msgid "Git Hub"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:301
+msgid "Tumbler"
+msgstr ""
+
+#: inc/admin-panel/doctorial-social-panel.php:339
+msgid "RSS"
+msgstr ""
+
+#: inc/controls/doctorial-custom-switch.php:12
+msgid "Yes"
+msgstr ""
+
+#: inc/controls/doctorial-custom-switch.php:13
+msgid "No"
+msgstr ""
+
+#. Name of the theme
+msgid "Doctorial"
+msgstr ""
+
+#. Description of the theme
+msgid ""
+"Doctorial is a free medical wordpress theme. It is one of the best theme for "
+"Doctors, Nurse, Pharmacy, Hospitals and all other medical organizations and "
+"companies. It is clean, elegant and responsive themes which is powered by "
+"animation. Demo Link: http://webdevrajan.com/demo/doctorial"
+msgstr ""
+
+#. URI of the theme
+msgid "http://webdevrajan.com/doctorial"
+msgstr ""
+
+#. Author of the theme
+msgid "rajanmaharjan45"
+msgstr ""
+
+#. Author URI of the theme
+msgid "http://webdevrajan.com/"
+msgstr ""
