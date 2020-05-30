@@ -1,4 +1,10 @@
 <?php
+
+// BEGIN iThemes Security - Do not modify or remove this line
+// iThemes Security Config Details: 2
+define( 'DISALLOW_FILE_EDIT', true ); // Disable File Editor - Security > Settings > WordPress Tweaks > File Editor
+// END iThemes Security - Do not modify or remove this line
+
 /**
  * The base configuration for WordPress
  *
@@ -13,7 +19,7 @@
  * * Database table prefix
  * * ABSPATH
  *
- * @link https://codex.wordpress.org/Editing_wp-config.php
+ * @link https://wordpress.org/support/article/editing-wp-config-php/
  *
  * @package WordPress
  */
@@ -46,14 +52,14 @@ define( 'DB_COLLATE', '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         '#cZeN<YZ}4be_4C {y>OnHRmhQV|vFUj.Rg.ujDZ?wV!4iy%I^)G/0v>R;t.DPsz' );
-define( 'SECURE_AUTH_KEY',  '-2*;QsFau0)):w+Dyj!>xM?w1rn0Ys^cKZCuVzgr9<0bXv:W^[(e(c%v=bI($S8,' );
-define( 'LOGGED_IN_KEY',    ';hNuZ+45=t)4JCf2,xZL*js1qy9gf|%y(dzHEcU_QJ}ZA7eM]J=+m=`Ci*_F!I#,' );
-define( 'NONCE_KEY',        'Y%SbE4iU2$r}AV4P, 5N-G}dvhn(h3{}=(H}w$-c!$u#PyN*>JCOK){>Bk_O=f2n' );
-define( 'AUTH_SALT',        '/1%X4.=QDF2IN%rLEg6-h6zDFU68wMaxH#-~z#=^kX+?bX:h]7?i!iH<o ,}u6)y' );
-define( 'SECURE_AUTH_SALT', '<Hp3On%]q__v?wB7-8N56}PYnU8~.fM*970Q6p3o1LDJ)jj0hD>4{DbU%}BR>s&$' );
-define( 'LOGGED_IN_SALT',   's2S9%-UL2myn1eybvco`Jl^Mz%?.) :~:,Uc}xVnmmKbGwT2xmH+EOM%nQXV_`X%' );
-define( 'NONCE_SALT',       'L<Oz>BDs`5{](|-)|@eSKG4bmBl]V.q#g x;gH{0uY5`E)5}0a;:yHiu`p8>U^zf' );
+define( 'AUTH_KEY',         'D|UQQH/Ay6s7+P%}_@.<|.7/.~l?a}P1i35-TbZP;Cu.[j>]_8%2Uj,2]A |l.iR' );
+define( 'SECURE_AUTH_KEY',  'd&DjWRXvfyQf `N QtJgw$1k@RZ_lUyJ8`}fS*gm_.U%AygLm]q@jo,6yrHPQ<3p' );
+define( 'LOGGED_IN_KEY',    'cm{plh@!h|*k9`CL!xLX.vk`7KA7j7%kzGg6P^R|`_*II.X^.FXO{.k]3|CN;W[N' );
+define( 'NONCE_KEY',        '(*yG$0%ZL1$_F`_1Q0EzV1X6pqh?1A43G[Ifc`B9|x.0GPz? zWaLUbN5s5k5|mj' );
+define( 'AUTH_SALT',        'J~SO*PL{b;c1iP((.M_DyWM?oa!3Q2W;Hp-$1.XE{e;&TCjfPs*aS@H30_/CPf?Z' );
+define( 'SECURE_AUTH_SALT', 'Ba;1(dNFP/LZM4T1-&&gUG(He(k=r)t1urCe:1H1wj,(CYx3JLFFJ-OA%Pp[CJ<`' );
+define( 'LOGGED_IN_SALT',   'Zcz)Fv!t!y?h<h[14rk!GRsbC`[TxDszX6Sz3Cyx@(U;Y#1[ob,bR1`K1HahtIKd' );
+define( 'NONCE_SALT',       'k47~zMD:G^cFX!^Pb<)~j2{nfCMaA~43Ld9!$c`-f$^p>&p{P$,)4J=s>;Xj)/)G' );
 
 /**#@-*/
 
@@ -73,9 +79,9 @@ $table_prefix = 'wp_';
  * in their development environments.
  *
  * For information on other constants that can be used for debugging,
- * visit the Codex.
+ * visit the documentation.
  *
- * @link https://codex.wordpress.org/Debugging_in_WordPress
+ * @link https://wordpress.org/support/article/debugging-in-wordpress/
  */
 define( 'WP_DEBUG', false );
 
@@ -83,8 +89,8 @@ define( 'WP_DEBUG', false );
 
 /** Absolute path to the WordPress directory. */
 if ( ! defined( 'ABSPATH' ) ) {
-	define( 'ABSPATH', dirname( __FILE__ ) . '/' );
+	define( 'ABSPATH', __DIR__ . '/' );
 }
 
 /** Sets up WordPress vars and included files. */
-require_once( ABSPATH . 'wp-settings.php' );
+require_once ABSPATH . 'wp-settings.php';
